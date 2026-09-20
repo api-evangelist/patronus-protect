@@ -1,0 +1,1 @@
+{"resource":"https://control.patronus.studio/api","authorization_servers":["https://control.patronus.studio"],"scopes_supported":["scan:read","scan:write"],"bearer_methods_supported":["header"]}

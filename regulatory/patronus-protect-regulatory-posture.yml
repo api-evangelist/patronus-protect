@@ -1,0 +1,20 @@
+generated: '2026-09-20'
+method: probed
+source: >-
+  Harvest of artifacts collected this run (well-known/ security.txt, security/ trust-center probe) and
+  live probes of conventional regulatory paths. HARVEST ONLY - no regime inferred.
+signals: {}
+note: >-
+  No canonical regulatory-posture signal was confirmed. The company is a German AI-security vendor
+  (Casdo Labs GmbH). Its legal notice (patronus.studio/impressum, referenced from security.txt) is a
+  JS-rendered SPA page and no machine-readable subprocessor table, DPA, VPAT/accessibility conformance
+  report, SBOM, data-residency statement or AI transparency page was found. The trust-center probe
+  found no named certifications. An empty signals map is the honest measurement, not an assertion that
+  none exist.
+evidence:
+- url: https://patronus.studio/.well-known/security.txt
+  status: 200
+- url: https://patronus.studio/impressum
+  status: 200
+  note: JS-rendered German legal notice (Impressum); no machine-readable regulatory signal.
+checked: '2026-09-20'

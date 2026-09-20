@@ -1,0 +1,17 @@
+generated: '2026-09-20'
+method: searched
+source: >-
+  Provider-published Agent Skill saved verbatim from
+  github.com/patronus-protect/patronus-security-cli/plugins/codex/skills/patronus-security-scan/SKILL.md
+note: >-
+  First-party skill shipped inside the Patronus Security CLI (Codex/Claude Code plugins). It drives the
+  native `patronus_scan`, `patronus_check_result` and `patronus_read_redacted` MCP tools; not authored
+  by API Evangelist.
+skills:
+- name: patronus-security-scan
+  file: patronus-protect-security-scan.md
+  description: >-
+    Check an explicitly requested file, directory, repository, public HTTPS URL or MCP server with
+    Patronus, preserving scope and returning scan coverage and findings.
+  operations: [patronus_scan, patronus_check_result, patronus_read_redacted]
+  method: searched

@@ -1,0 +1,47 @@
+generated: '2026-09-20'
+method: derived
+source: >-
+  API-key scheme derived from the provider's first-party SDK client
+  (github.com/patronus-protect/patronus-security-cli sdk/python/src/patronus_api_client/client.py).
+  OAuth2 scheme from live discovery at control.patronus.studio/.well-known/oauth-authorization-server
+  and /.well-known/oauth-protected-resource plus the 401 challenge on control.patronus.studio/api/mcp.
+  The authoritative OpenAPI (docs.patronus.studio/openapi.json) is Cloudflare JS-challenged and was
+  not fetchable, so the API-key scheme is derived from the SDK rather than the spec securitySchemes.
+summary:
+  types: [http, oauth2]
+  http_bearer: true
+  oauth2_flows: [authorizationCode]
+schemes:
+- name: apiKey
+  type: http
+  scheme: bearer
+  in: header
+  parameter_name: Authorization
+  format: "Bearer <PATRONUS_API_KEY>"
+  applies_to: REST Scan API (control.patronus.studio/api/v1) and API-key MCP access
+  description: >-
+    Server-to-server access to the Scan API uses a bearer API key in the Authorization header. The
+    SDK reads it from the PATRONUS_API_KEY environment variable. A rate-limited anonymous allowance
+    exists for public-URL scans without a key; MCP-server audits always require an authenticated key.
+  sources: [sdk/python/client.py]
+- name: oauth2
+  type: oauth2
+  applies_to: Remote MCP server (control.patronus.studio/api/mcp)
+  description: >-
+    The remote MCP server is protected by OAuth 2.1 (authorization code + PKCE, public clients via
+    Dynamic Client Registration). Handled by the MCP host, not the API-key SDK clients.
+  flows:
+  - flow: authorizationCode
+    resource: https://control.patronus.studio/api
+    authorization_server: https://control.patronus.studio
+    authorization_endpoint: https://control.patronus.studio/mcp-authorize
+    token_endpoint: https://control.patronus.studio/api/oauth/mcp/token
+    registration_endpoint: https://control.patronus.studio/api/oauth/mcp/register
+    pkce: S256
+    grant_types: [authorization_code]
+    token_endpoint_auth_methods: [none]
+    scopes: [scan:read, scan:write]
+    bearer_methods: [header]
+  sources:
+  - well-known/patronus-protect-oauth-authorization-server.json
+  - well-known/patronus-protect-oauth-protected-resource.json

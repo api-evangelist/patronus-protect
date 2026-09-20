@@ -1,0 +1,66 @@
+generated: '2026-09-20'
+method: derived
+source: >-
+  Derived from the provider's first-party SDK client (github.com/patronus-protect/patronus-security-cli
+  sdk/python/src/patronus_api_client/client.py, contract v1.1.0) and live 401/404 responses from
+  control.patronus.studio/api. The authoritative OpenAPI is Cloudflare JS-challenged and was not
+  fetchable.
+summary: >-
+  Single-purpose Scan API: submit content, poll for a result. Bearer API key on the REST plane, OAuth
+  on the remote MCP plane. Asynchronous job model with an optional synchronous wait, a stable request
+  id for tracing, and a consistent error envelope.
+
+auth_style:
+  rest: HTTP Bearer API key in Authorization header
+  mcp_remote: OAuth 2.1 authorization code + PKCE (scopes scan:read/scan:write)
+
+base_url: https://control.patronus.studio/api/v1
+
+async_model:
+  submit: POST /scan
+  poll: GET /scan/{job_id}
+  synchronous_wait_header: "Prefer: wait=1"
+  statuses: [accepted, queued, running, completed, failed]
+  job_id_format: "job_ + 32 lowercase/uppercase hex chars (36 total)"
+  max_jobs_per_submission: 32
+  response_envelope_fields: [status, jobs, input, extraction, coverage, usage, request_id]
+
+request_tracing:
+  response_field: request_id
+  response_header: x-request-id
+  error_field: error.request_id
+
+pagination:
+  style: none
+  note: The scan model has no list/collection endpoints, so there is no pagination.
+
+error_envelope:
+  shape: '{ "error": { "code": <string>, "message": <string>, "request_id": <string> } }'
+  format: vendor JSON (not RFC 9457 problem+json)
+  note: See errors/patronus-protect-problem-types.yml.
+
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  retry_after_header: Retry-After
+  quota_codes: codes containing "QUOTA"
+  note: See rate-limits/patronus-protect-rate-limits.yml.
+
+idempotency:
+  coverage: none
+  mechanism: none
+  note: >-
+    No Idempotency-Key header or replay-protection mechanism is documented in the SDK or contract.
+    POST /scan creates a new scan job on each call. The synchronous `Prefer: wait=1` header controls
+    blocking, not idempotency.
+
+reversibility:
+  applicable: false
+  grade: na
+  note: >-
+    The Scan API is analysis-only. POST /scan produces a transient scan job/result and has no
+    consequential external side effect (no payment, provisioning, or user-data mutation) to cancel,
+    refund, void or restore. dry_run is likewise na.
+
+dry_run_mode:
+  supported: false
+  grade: na

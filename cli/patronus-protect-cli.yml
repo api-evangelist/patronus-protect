@@ -1,0 +1,44 @@
+generated: '2026-09-20'
+method: searched
+source: >-
+  github.com/patronus-protect/patronus-security-cli (README.md, INSTALL.md, releases). Binary in
+  packages/ (patronus-security-scanner).
+cli:
+  name: patronus-security-scanner
+  vendor: Casdo Labs GmbH
+  version: 0.1.0
+  released: '2026-09-15'
+  summary: >-
+    Local-first runtime protection and security scans for AI coding agents. Combines the scanner
+    binary with Runtime Protection plugins for Codex, Claude Code and DeepSeek Harness; detection is
+    powered by Patronus Ark. Inspects external text before it reaches the model and keeps dangerous
+    content behind a verifiable receipt.
+  install:
+  - method: curl-installer
+    command: "curl -fsSL https://github.com/patronus-protect/patronus-security-cli/releases/latest/download/install.sh | sh"
+    note: Detects platform, verifies the matching signed artifact, installs to ~/.local/bin, opens onboarding. No account required for local protection.
+  - method: agent-runbook
+    url: https://github.com/patronus-protect/patronus-security-cli/blob/main/INSTALL.md
+  platforms: [aarch64-apple-darwin, x86_64-unknown-linux-gnu, x86_64-pc-windows-msvc]
+  integrity: blake3 + sha256 per artifact; SHA256SUMS per platform
+  commands:
+  - group: scan
+    surface: "patronus-security-scanner scan KIND TARGET --format json"
+    note: KIND in {repo, directory, file, url, mcp}; add --server NAME for a named MCP config entry.
+  - group: config
+    surface: "config print --format json"
+  - group: setup
+    surface: patronus-setup
+    note: Handles installation/setup when requested.
+  plugins:
+  - host: Codex
+    hooks: prompt, tool-result and MCP-result hooks
+  - host: Claude Code
+    hooks: lifecycle, prompt and result hooks
+  - host: DeepSeek Harness
+    hooks: Cordis request and response gates
+  modes: [local, hybrid, api]
+  mode_note: >-
+    local scans text/files on-device; hybrid keeps files/prompts local and sends only larger runtime
+    tool/MCP results (>1024 tokens) to the API; api sends text to the API. Explicit URL/MCP audits
+    always use the API regardless of mode.

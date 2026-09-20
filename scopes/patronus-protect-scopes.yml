@@ -1,0 +1,20 @@
+generated: '2026-09-20'
+method: probed
+source: >-
+  Live RFC 8414 OAuth authorization-server metadata and RFC 9728 protected-resource metadata at
+  control.patronus.studio/.well-known/ (saved verbatim under well-known/). No separate human scopes
+  reference page was reachable (docs host is Cloudflare JS-challenged).
+oauth2:
+  authorization_server: https://control.patronus.studio
+  resource: https://control.patronus.studio/api
+  flow: authorizationCode
+  pkce: S256
+scopes:
+- name: scan:read
+  description: Read access to scan results / receipts on the Patronus control plane (MCP).
+- name: scan:write
+  description: Submit scans (text, URL, MCP-server audits) on the Patronus control plane (MCP).
+note: >-
+  Both scopes are declared in scopes_supported of the authorization-server and protected-resource
+  metadata. Descriptions are inferred from the scope names and the Scan API surface; the provider
+  does not publish a reachable scope-reference page, so they are not verbatim.

@@ -1,0 +1,24 @@
+generated: '2026-09-20'
+method: derived
+source: >-
+  Derived from the provider's first-party SDK error handling (sdk/python/src/patronus_api_client/
+  client.py) and the SKILL.md / native MCP tool descriptions. The docs host is Cloudflare
+  JS-challenged, so no published limits table was reachable.
+limit_count: 0
+exhaustion:
+  status: 429
+  headers: [Retry-After]
+  quota_codes: codes containing "QUOTA"
+  distinction: >-
+    The SDK distinguishes plan-quota exhaustion (429 with a *QUOTA* code) from generic rate limiting
+    (429 without one).
+scopes_observed:
+- scope: anonymous public-URL scan
+  note: A rate-limited anonymous allowance permits public-URL scans without an API key.
+- scope: authenticated (API key / OAuth)
+  note: MCP-server audits and higher volume require an authenticated account; billed in "scan_units" (unit_version scan-unit-v1, seen in the completed-scan fixture).
+note: >-
+  No numeric per-window limits, burst values, or RateLimit-* response headers are published on a
+  machine-readable or crawler-reachable page; only the 429 + Retry-After behavior and the quota-vs-rate
+  distinction are documented (via the SDK). Recorded as limit_count 0 (honest zero) with the runtime
+  signal captured.

@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the Patronus Scan API
+  version: 1.0.0
+extends: ../openapi/patronus-protect-openapi.json
+x-provenance:
+  generated: '2026-09-20'
+  method: generated
+  source: >-
+    Enhancements API Evangelist derived from public artifacts (security.txt contact, OAuth discovery,
+    pricing). Applied as an overlay so the provider's original spec is never mutated.
+actions:
+- target: $.info
+  description: Add a public support/security contact recovered from patronus.studio/.well-known/security.txt.
+  update:
+    contact:
+      name: Patronus (Casdo Labs GmbH)
+      email: team@patronus.studio
+      url: https://patronus.studio
+- target: $.servers[0]
+  description: Note the versioned base path used by the scan operations.
+  update:
+    description: >-
+      Control plane. Scan operations are served under /api/v1 (base https://control.patronus.studio/api/v1).
+- target: $.paths['/api/v1/scan'].post
+  description: Cross-reference the anonymous rate-limited allowance for public-URL scans.
+  update:
+    x-apievangelist-note: >-
+      The empty security requirement ({}) enables a rate-limited anonymous allowance for public-URL
+      scans without an API key; scan:write is required for authenticated use.

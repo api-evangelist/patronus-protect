@@ -1,0 +1,48 @@
+generated: '2026-09-20'
+method: derived
+source: >-
+  Derived from the provider's first-party SDK error handling (sdk/python/src/patronus_api_client/
+  client.py) and live error responses observed at control.patronus.studio/api (NOT_FOUND,
+  AUTH_REQUIRED, INVALID_TEXT). The authoritative OpenAPI is Cloudflare JS-challenged and was not
+  fetchable, so 4xx/5xx bodies are recovered from the SDK and live probes, not the spec.
+format: vendor-json
+envelope: '{ "error": { "code": <string>, "message": <string>, "request_id": <string> } }'
+not_rfc9457: true
+status_families:
+- statuses: [401, 403]
+  kind: authentication
+  meaning: Missing/invalid credentials.
+  observed_codes: [AUTH_REQUIRED]
+  remediation: Provide a valid Bearer API key, or complete the MCP OAuth flow.
+- statuses: [429]
+  kind: quota | rate_limit
+  meaning: Rate limit or quota exhausted; quota codes contain "QUOTA".
+  headers: [Retry-After]
+  remediation: Honor Retry-After; reduce request rate or raise plan quota.
+- statuses: [400, 404, 409, 413, 422]
+  kind: validation
+  meaning: Bad request, not found, conflict, payload too large, or unprocessable entity.
+  observed_codes: [NOT_FOUND, INVALID_TEXT]
+  remediation: Correct the request body/target; check the endpoint path and content size.
+- statuses: [5xx]
+  kind: transport
+  meaning: Upstream/transport failure.
+  remediation: Retry with backoff.
+problem_types:
+- code: AUTH_REQUIRED
+  http_status: 401
+  title: Authentication required
+  detail: Sign in or supply an API key ("Bitte melde dich an oder verwende einen API-Key").
+- code: NOT_FOUND
+  http_status: 404
+  title: Endpoint not found
+  detail: The requested endpoint does not exist.
+- code: INVALID_TEXT
+  http_status: 404
+  title: Invalid text / endpoint
+  detail: Observed on malformed scan paths.
+- code: "*QUOTA*"
+  http_status: 429
+  title: Quota exceeded
+  detail: Scan-unit quota exhausted; distinct from generic rate limiting.
+client_error_kinds: [authentication, quota, rate_limit, validation, transport, timeout, protocol]

@@ -1,0 +1,104 @@
+generated: '2026-09-20'
+method: probed
+source: live probes of /.well-known/ across all Patronus (patronus.studio) hosts
+summary: >-
+  Three real documents are served. patronus.studio serves an RFC 9116 security.txt (text/plain).
+  The API control plane control.patronus.studio serves RFC 8414 OAuth authorization-server metadata
+  and RFC 9728 OAuth protected-resource metadata (both application/json) for its remote MCP server
+  (resource https://control.patronus.studio/api, scopes scan:read scan:write, DCR + PKCE S256).
+  A scoped RFC 9728 doc is also served at /.well-known/oauth-protected-resource/api/mcp, which the
+  MCP endpoint's 401 WWW-Authenticate challenge points to.
+pointer_basis: >-
+  WellKnown emitted on the three 200s (security.txt on patronus.studio; oauth-authorization-server +
+  oauth-protected-resource on control.patronus.studio). SecurityTxt emitted on the served security.txt.
+  protected_resource_metadata, dynamic_client_registration and delegated_identity are all present on
+  the control host, the RFC 9728 resource server, not on the primary domain.
+false_positive_watch: >-
+  api.patronus.studio (the keyless demo app) answers HTTP 200 with a 1138-byte SPA shell for EVERY
+  /.well-known/* path, and control.patronus.studio answers 200 with a 1539-byte SPA shell for the
+  browser-routed paths (security.txt, openid-configuration, api-catalog, ai-plugin.json, agent cards).
+  Those 200s are recorded below as misses (shape: SPA shell), not hits. Only the application/json and
+  text/plain bodies are real documents.
+hosts:
+- host: https://patronus.studio
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: patronus-protect-security.txt
+    content_type: text/plain
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://control.patronus.studio
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: patronus-protect-oauth-authorization-server.json
+    content_type: application/json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: patronus-protect-oauth-protected-resource.json
+    content_type: application/json
+  - path: /.well-known/oauth-protected-resource/api/mcp
+    status: 200
+    content_type: application/json
+    note: Scoped RFC 9728 metadata the MCP endpoint (control.patronus.studio/api/mcp) 401 challenge references; identical body to the base resource doc.
+  - path: /.well-known/security.txt
+    status: 200
+    note: SPA shell (1539 bytes text/html) - not a document, recorded as a miss.
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: SPA shell (1539 bytes text/html) - not a document, recorded as a miss.
+  - path: /.well-known/api-catalog
+    status: 200
+    note: SPA shell - miss.
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    note: SPA shell - miss.
+  - path: /.well-known/agent-card.json
+    status: 200
+    note: SPA shell - miss (no real AgentCard shape).
+  - path: /.well-known/agent.json
+    status: 200
+    note: SPA shell - miss (no real AgentCard shape).
+- host: https://api.patronus.studio
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: SPA shell (1138 bytes text/html) for every /.well-known/* path - all misses.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: SPA shell - miss.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    note: SPA shell - miss.
+  - path: /.well-known/agent-card.json
+    status: 200
+    note: SPA shell - miss (no real AgentCard shape).
+  - path: /.well-known/agent.json
+    status: 200
+    note: SPA shell - miss (no real AgentCard shape).
+- host: https://docs.patronus.studio
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  note: docs.patronus.studio (Mintlify docs) is behind a Cloudflare managed JS challenge for browser GETs; /.well-known/* paths return real 404s.

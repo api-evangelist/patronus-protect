@@ -1,0 +1,83 @@
+generated: '2026-09-20'
+method: derived
+source: >-
+  Derived from the provider's OpenAPI (openapi/patronus-protect-openapi.json, "Patronus Scan API"
+  v1.2.0), the first-party SDK (sdk/python/src/patronus_api_client/client.py), the contract fixture
+  contract/fixtures/completed.json, and the Patronus Ark README category list.
+entities:
+- name: ScanRequest
+  description: Submission body for POST /api/v1/scan (schemas TextScan, UrlScan, McpServerScan).
+  fields:
+  - text
+  - url
+  - mcp_server_url
+  - files (multipart)
+  - config
+  note: Exactly one primary target (text, url, mcp_server_url, or multipart files) plus optional ScanConfig.
+- name: ScanSubmission
+  description: Response envelope from POST /api/v1/scan (schemas Accepted, CompletedSubmission).
+  fields:
+  - status
+  - jobs
+  - input
+  - extraction
+  - coverage
+  - usage
+  - request_id
+- name: Job
+  description: A single scan job / result (schemas Job, SubmissionJob, AcceptedJob, Completion).
+  id_field: job_id
+  id_format: "job_ + 32 hex"
+  statuses: [queued, running, completed, failed]
+  fields:
+  - job_id
+  - status
+  - decision
+  - categories
+  - timings
+- name: CategoryResult
+  description: Per-category classification result.
+  fields:
+  - category
+  - class_name
+  - confidence
+  - evidence
+  known_categories:
+  - injection
+  - dlp
+  - pii
+  - dynamic_pii
+  - sensitive_documents
+  - agentic_tool_class
+  - agentic_tool_action
+  - agentic_tool_tags
+  - routing_intent
+  - threat_type
+- name: ScanUsage
+  description: Billing/usage for a submission.
+  fields:
+  - scan_units
+  - unit_version
+- name: CoverageMetadata
+  description: Whether the scan completed fully.
+  fields:
+  - state
+- name: Error
+  description: Error envelope (schemas Error, QuotaError, Failure).
+  fields:
+  - code
+  - message
+  - request_id
+relationships:
+- from: ScanSubmission
+  to: Job
+  type: has_many
+  via: jobs
+- from: Job
+  to: CategoryResult
+  type: has_many
+  via: categories
+- from: Job
+  to: ScanUsage
+  type: has_one
+  via: usage

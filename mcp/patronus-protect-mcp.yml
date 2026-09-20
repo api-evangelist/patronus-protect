@@ -1,0 +1,117 @@
+generated: '2026-09-20'
+method: searched
+source: >-
+  Remote endpoint probed live (control.patronus.studio/api/mcp returns 401 with an RFC 9728
+  WWW-Authenticate challenge); OAuth discovery from control.patronus.studio/.well-known/
+  oauth-authorization-server + oauth-protected-resource; local stdio server and tool schemas
+  read verbatim from the provider's open plugin source
+  (github.com/patronus-protect/patronus-security-cli plugins/native/src/mcp.ts, plugins/*/.mcp.json).
+summary: >-
+  Patronus ships an MCP server in two deployments. A remote, OAuth-protected MCP server is served at
+  control.patronus.studio/api/mcp (DCR + PKCE, scopes scan:read/scan:write). A local stdio MCP server
+  ("patronus-native", protocol 2025-06-18) ships inside the CLI plugins for Codex, Claude Code and
+  DeepSeek and runs as `node scripts/patronus.mjs mcp`. Both expose scan/receipt tools; the local
+  server also runs as PreToolUse runtime hooks that gate prompt/tool/MCP-result text.
+
+deployment:
+  mode: both
+  endpoint: https://control.patronus.studio/api/mcp
+  install: "curl -fsSL https://github.com/patronus-protect/patronus-security-cli/releases/latest/download/install.sh | sh"
+  package: https://github.com/patronus-protect/patronus-security-cli
+  auth: oauth
+  verified: probed
+  probe: gated
+  checked: '2026-09-20'
+  note: >-
+    Remote endpoint (control.patronus.studio/api/mcp) confirmed by a live 401 whose WWW-Authenticate
+    is `Bearer resource_metadata="https://control.patronus.studio/.well-known/oauth-protected-resource/api/mcp",
+    scope="scan:..."` - a genuine, OAuth-gated agent surface. Local stdio server is the bundled
+    plugin MCP (`node scripts/patronus.mjs mcp`, auth none), installed with the CLI rather than as a
+    standalone npx/pip package. The remote endpoint URL is the provider's own published RFC 9728
+    resource, not a guessed path.
+
+server:
+  name: patronus-native
+  protocol_version: '2025-06-18'
+  version: 0.1.1
+  transports:
+  - remote:
+      url: https://control.patronus.studio/api/mcp
+      auth: oauth2
+  - local-stdio:
+      command: node
+      args: ["scripts/patronus.mjs", "mcp"]
+      source: plugins/claude/.mcp.json, plugins/codex/.mcp.json
+      auth: none
+
+auth:
+  methods:
+  - oauth2
+  oauth2:
+    resource: https://control.patronus.studio/api
+    authorization_server: https://control.patronus.studio
+    authorization_endpoint: https://control.patronus.studio/mcp-authorize
+    token_endpoint: https://control.patronus.studio/api/oauth/mcp/token
+    registration_endpoint: https://control.patronus.studio/api/oauth/mcp/register
+    grant_types: [authorization_code]
+    pkce: S256
+    token_endpoint_auth_methods: [none]
+    scopes: [scan:read, scan:write]
+    bearer_methods: [header]
+    discovery:
+    - well-known/patronus-protect-oauth-authorization-server.json
+    - well-known/patronus-protect-oauth-protected-resource.json
+  note: >-
+    MCP-server audits of third-party servers via the API require an authenticated account; the local
+    server itself needs no auth (it runs on the developer's machine). Remote MCP OAuth is handled by
+    the MCP host, not by the API-key SDK clients.
+
+tool_count: 3
+tools:
+- name: patronus_scan
+  category: scan
+  description: >-
+    Run a static file, directory, repository, public HTTPS URL or MCP-server audit, only on explicit
+    user request. Public URL and MCP-server audits use the Patronus Security API; file/dir/repo scans
+    run locally via Patronus Ark. Returns security metadata only, never file contents.
+  input_schema:
+    type: object
+    properties:
+      kind:
+        type: string
+        enum: [repo, directory, file, url, mcp]
+      path:
+        type: string
+        description: User-supplied file/folder path, public HTTPS URL, or MCP configuration file path.
+      server:
+        type: string
+        description: Named server within an MCP configuration file.
+    required: [kind, path]
+    additionalProperties: false
+- name: patronus_check_result
+  category: receipt
+  description: >-
+    Check a pending scan receipt by scan_id without rerunning the source tool. Approved responses
+    include the verified original; completed PII/DLP-only responses include a redacted result.
+  input_schema:
+    type: object
+    properties:
+      scan_id:
+        type: string
+    required: [scan_id]
+    additionalProperties: false
+- name: patronus_read_redacted
+  category: receipt
+  description: >-
+    Retrieve verified masked text for a completed dangerous runtime response (scan_id) or a static
+    finding (file_id). Never releases the original.
+  input_schema:
+    type: object
+    properties:
+      scan_id:
+        type: string
+        description: Runtime receipt scan_id.
+      file_id:
+        type: string
+        description: Static finding file_id.
+    additionalProperties: false

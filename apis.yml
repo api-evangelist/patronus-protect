@@ -1,0 +1,110 @@
+name: Patronus Protect
+aid: patronus-protect
+description: >-
+  Patronus Protect, from Casdo Labs GmbH, is an on-device AI firewall that detects prompt injection,
+  PII/DLP, sensitive documents and agentic tool risk in text, public HTTPS webpages, documents and MCP
+  servers before they are used by AI agents, RAG pipelines or LLM applications. It exposes a REST Scan
+  API (control.patronus.studio/api/v1), first-party Rust, TypeScript and Python SDK clients, a local
+  CLI with Codex, Claude Code and DeepSeek plugins, a remote OAuth-protected MCP server and a local
+  stdio MCP server, and the open-source Patronus Ark scanning core.
+url: https://patronus.studio/
+created: '2026-09-20'
+modified: '2026-09-20'
+tags:
+- AI Safety
+- Prompt Injection
+- Security
+- LLM
+- agent-native
+- MCP
+- DLP
+- PII
+- On-Device
+- AI Firewall
+apis:
+- name: Patronus Scan API
+  description: >-
+    Public REST Scan API (OpenAPI 3.1, contract v1.2.0). POST /api/v1/scan submits text, a public
+    HTTPS URL, an MCP server, or uploaded documents for prompt-injection, PII/DLP, sensitive-document
+    and agentic-tool-risk detection; GET /api/v1/scan/{job_id} polls the job. Bearer API key, with a
+    rate-limited anonymous allowance for public-URL scans.
+  humanURL: https://docs.patronus.studio/api-reference/
+  baseURL: https://control.patronus.studio/api/v1
+  properties:
+  - type: OpenAPI
+    url: openapi/patronus-protect-openapi.json
+  - type: OpenAPI
+    url: https://docs.patronus.studio/openapi.json
+    name: Provider-hosted OpenAPI (contract v1.2.0)
+  - type: Documentation
+    url: https://docs.patronus.studio/api-reference/
+  - type: APIReference
+    url: https://docs.patronus.studio/api-reference/
+  - type: Overlay
+    url: overlays/patronus-protect-openapi-overlay.yaml
+  - type: MCPServer
+    url: mcp/patronus-protect-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/patronus-protect-tool-crosswalk.yml
+  - type: Authentication
+    url: authentication/patronus-protect-authentication.yml
+  - type: OAuthScopes
+    url: scopes/patronus-protect-scopes.yml
+  - type: RateLimits
+    url: rate-limits/patronus-protect-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/patronus-protect-problem-types.yml
+  - type: DataModel
+    url: data-model/patronus-protect-data-model.yml
+  - type: Conventions
+    url: conventions/patronus-protect-conventions.yml
+common:
+- type: Website
+  url: https://patronus.studio/
+- type: DeveloperPortal
+  url: https://docs.patronus.studio/
+- type: GettingStarted
+  url: https://patronus-protect.github.io/patronus-security/getting-started/quickstart/
+- type: Pricing
+  url: https://patronus.studio/pricing
+- type: Blog
+  url: https://patronus.studio/blog
+- type: GitHubOrganization
+  url: https://github.com/patronus-protect
+- type: Packages
+  url: packages/patronus-protect-packages.yml
+- type: SDKs
+  url: packages/patronus-protect-packages.yml
+- type: CLI
+  url: cli/patronus-protect-cli.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/patronus-protect-llms.txt
+- type: JSONSchema
+  url: json-schema/patronus-protect-runtime-v1.schema.json
+- type: Conformance
+  url: conformance/patronus-protect-conformance.yml
+- type: Plans
+  url: plans/patronus-protect-plans-pricing.yml
+- type: ChangeLog
+  url: changelog/patronus-protect-changelog.yml
+- type: WellKnown
+  url: well-known/patronus-protect-well-known.yml
+- type: SecurityTxt
+  url: well-known/patronus-protect-security.txt
+- type: VulnerabilityDisclosure
+  url: security/patronus-protect-vulnerability-disclosure.yml
+- type: Security
+  url: security/patronus-protect-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/patronus-protect-domain-security.yml
+maintainers:
+- FN: Casdo Labs GmbH
+  email: team@patronus.studio
+  url: https://patronus.studio
+x-enrichment:
+  date: '2026-09-20'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v3

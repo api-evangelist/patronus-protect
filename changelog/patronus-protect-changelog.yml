@@ -1,0 +1,26 @@
+generated: '2026-09-20'
+method: searched
+source: >-
+  GitHub Releases (github.com/patronus-protect/patronus-security-cli/releases) and package registry
+  version history (crates.io / PyPI / npm). No dedicated changelog page is crawler-reachable (docs
+  host is Cloudflare JS-challenged).
+scheme: semver
+surfaces:
+- GitHub Releases (CLI, signed artifacts)
+- crates.io / PyPI / npm published versions
+current_versions:
+  patronus-security-cli: 0.1.0
+  patronus-api-client: 0.1.0
+  patronus-ark: 0.1.7
+entries:
+- version: patronus-security-cli v0.1.0
+  date: '2026-09-15'
+  highlights:
+  - First CLI release (patronus-security-scanner) with macOS/Linux/Windows binaries.
+  - Codex, Claude Code and DeepSeek Harness runtime-protection plugins.
+  - First-party Rust/TypeScript/Python Scan API clients (patronus-api-client, @patronus-protect/api-client).
+- version: patronus-ark 0.1.7
+  date: '2026-09-14'
+  highlights:
+  - Latest release of the open-source scanning core (crates.io + PyPI); first published 2026-07-24.
+note: Recent window only; GitHub Releases is the authoritative dated source.

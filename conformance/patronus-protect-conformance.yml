@@ -1,0 +1,43 @@
+generated: '2026-09-20'
+method: probed
+source: >-
+  Live OAuth discovery documents at control.patronus.studio/.well-known/ (saved under well-known/) and
+  the RFC 9728 401 challenge on control.patronus.studio/api/mcp. Reward-only: only standards the
+  contract/metadata actually declares are asserted.
+conformance:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    control.patronus.studio/.well-known/oauth-authorization-server declares authorization_code grant,
+    S256 PKCE, and scopes scan:read/scan:write for the remote MCP server.
+- id: pkce-rfc7636
+  conforms: true
+  evidence: code_challenge_methods_supported = ["S256"] in the authorization-server metadata.
+- id: oauth-authorization-server-metadata-rfc8414
+  conforms: true
+  evidence: control.patronus.studio/.well-known/oauth-authorization-server returns valid RFC 8414 metadata (200 application/json).
+- id: oauth-protected-resource-metadata-rfc9728
+  conforms: true
+  evidence: >-
+    control.patronus.studio/.well-known/oauth-protected-resource (and the scoped .../api/mcp variant)
+    return RFC 9728 metadata; the MCP endpoint's 401 WWW-Authenticate references resource_metadata.
+- id: dynamic-client-registration-rfc7591
+  conforms: true
+  evidence: registration_endpoint https://control.patronus.studio/api/oauth/mcp/register in the authorization-server metadata.
+- id: mcp
+  conforms: true
+  evidence: >-
+    Local stdio MCP server "patronus-native" implements MCP protocol 2025-06-18 (initialize,
+    tools/list, tools/call); remote MCP server served at control.patronus.studio/api/mcp.
+- id: rfc9457
+  conforms: false
+  evidence: Error responses use a vendor {error:{code,message,request_id}} envelope, not application/problem+json.
+- id: security-txt-rfc9116
+  conforms: true
+  evidence: patronus.studio/.well-known/security.txt is a valid RFC 9116 document (Contact, Expires, Canonical, Policy).
+domain_standard:
+  present: false
+  note: >-
+    AI-safety / prompt-injection scanning has no adopted machine-readable domain standard for a
+    contract to declare (no SCIM/OData/FHIR/OpenRTB/etc. applies). Reward-only, so no penalty; nothing
+    invented to fill the slot.

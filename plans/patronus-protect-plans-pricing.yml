@@ -1,0 +1,50 @@
+generated: '2026-09-20'
+method: searched
+source: https://patronus.studio/pricing
+currency: EUR
+billing_period: monthly
+overage_policy: >-
+  No overage charges. When a monthly Scan-Unit quota is reached, further API scans are rejected until
+  the next monthly reset ("Es gibt keine automatischen Mehrverbrauchskosten").
+plan_count: 4
+plans:
+- name: Free
+  product: Patronus Monitor
+  price: 0
+  currency: EUR
+  period: month
+  api_quota: 30000 Scan Units/month
+  included: [API key, SDKs, Remote MCP, AI inventory + Shadow-AI discovery (Desktop, in private preview)]
+- name: Light
+  product: Patronus Protect
+  price: 6.99
+  currency: EUR
+  period: month
+  unit: per device
+  api_quota: 100000 Scan Units/month
+  included: [Everything in Free, unlimited local checks, prompt-injection + sensitive-data detection, auto block/redact]
+- name: Pro
+  product: Protect & API
+  price: 69
+  currency: EUR
+  period: month
+  unit: up to 5 devices
+  api_quota: No monthly Scan-Unit limit
+  limits: {input_tokens_per_second: 25000}
+  recommended: true
+  included: [Everything in Light, use on up to 5 devices, for production API workloads]
+- name: Business
+  product: For organizations
+  price: custom
+  api_quota: Custom API quotas
+  included: [Custom device count, rollout/governance/central overview, dedicated onboarding + support]
+ark_licensing:
+- name: Community
+  price: 0
+  note: Community use and selected projects (open-source Patronus Ark).
+- name: Commercial & Enterprise
+  price: on request
+  note: Commercial products, larger deployments, custom requirements.
+note: >-
+  Pricing page is in German (Casdo Labs GmbH). Desktop App is in private preview; the API is available
+  today and included from the Free tier up.

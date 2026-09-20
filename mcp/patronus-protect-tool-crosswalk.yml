@@ -1,0 +1,64 @@
+generated: '2026-09-20'
+method: derived
+source: >-
+  Derived by aligning the MCP tool list (mcp/patronus-protect-mcp.yml, read verbatim from
+  plugins/native/src/mcp.ts) with the REST Scan API surface recovered from the provider's own
+  first-party SDK client (github.com/patronus-protect/patronus-security-cli sdk/python/src/
+  patronus_api_client/client.py, contract v1.1.0). The authoritative OpenAPI (docs.patronus.studio/
+  openapi.json) is behind a Cloudflare managed JS challenge and could not be fetched, so REST
+  operations are identified by method+path (no operationIds available) and bindings are mapped by
+  semantics; confidence set honestly per row.
+purpose: >-
+  Bind each MCP tool to the REST operation that backs it. Patronus's REST Scan API and MCP server are
+  two projections of one scan core: url/mcp audits go through the API, file/dir/repo scans run locally
+  via Patronus Ark, and receipt tools are runtime-hook constructs with no public REST equivalent.
+surfaces:
+  rest_api: https://control.patronus.studio/api/v1        # POST /scan, GET /scan/{job_id}; Bearer API key
+  rest_openapi: https://docs.patronus.studio/openapi.json # contract v1.1.0 - Cloudflare JS-challenged, not saved
+  mcp_remote: https://control.patronus.studio/api/mcp     # OAuth-gated (tools/list requires auth)
+  mcp_local: node scripts/patronus.mjs mcp                # local stdio, tool schemas read from source
+
+crosswalk:
+- tool: patronus_scan
+  category: scan
+  rest: ["POST /scan (scan_url; body {url})"]
+  binding: rest
+  confidence: high
+  note: kind=url routes to the REST Scan API (scan_url); anonymous rate-limited allowance permitted.
+- tool: patronus_scan
+  category: scan
+  rest: ["POST /scan (scan_mcp_server; body {mcp_server_url})"]
+  binding: rest
+  confidence: high
+  note: kind=mcp routes to the REST Scan API (scan_mcp_server); requires an authenticated account.
+- tool: patronus_check_result
+  category: receipt
+  rest: ["GET /scan/{job_id}"]
+  binding: rest
+  confidence: medium
+  note: >-
+    Polling a pending receipt maps semantically to the REST job-lookup endpoint (GET /scan/{job_id});
+    the runtime-hook receipt store adds redaction/approval state on top, so the mapping is not exact.
+
+mcp_only:
+- tool: patronus_scan
+  reason: >-
+    kind=file/directory/repo scans run locally on-device via Patronus Ark (patronus-ark), not through
+    the hosted REST API - no public REST operation backs the static scan path.
+- tool: patronus_read_redacted
+  reason: >-
+    Retrieval of verified masked text (scan_id / file_id) is a local runtime-hook construct; no public
+    REST operation returns redacted originals.
+
+rest_only:
+- op: "POST /scan (scan_text; body {text})"
+  reason: Direct text scanning is exposed by the SDK/REST API; the MCP patronus_scan tool takes a path/URL/MCP target rather than raw text (runtime hooks handle in-band text separately).
+- op: "POST /scan (scan_files; multipart files[])"
+  reason: File-upload scanning via the REST API; the MCP static-scan path reads files locally instead of uploading.
+
+coverage:
+  mcp_tools: 3
+  rest_operations_known: 2
+  bound: 2
+  mcp_only: 2
+  rest_only: 2

@@ -1,0 +1,65 @@
+generated: '2026-09-20'
+method: searched
+source: >-
+  crates.io, PyPI and npm registry metadata endpoints, plus GitHub Releases for the CLI binary. All
+  packages are first-party (repositories under github.com/patronus-protect).
+packages:
+- name: patronus-ark
+  registry: pypi
+  official: true
+  url: https://pypi.org/project/patronus-ark/
+  version: 0.1.7
+  published: '2026-09-14'
+  repository: https://github.com/patronus-protect/patronus-security
+  description: >-
+    Python bindings (abi3-py311 wheels, import `patronus_ark`) for Patronus Ark's hybrid Rust security
+    scanners - the open-source, on-device scanning core behind Patronus Protect (prompt injection, DLP,
+    PII, sensitive documents, agentic tool risk).
+- name: patronus-ark
+  registry: crates
+  official: true
+  url: https://crates.io/crates/patronus-ark
+  version: 0.1.7
+  published: '2026-09-14'
+  first_release: '2026-07-24'
+  repository: https://github.com/patronus-protect/patronus-security
+  description: Rust core crate for the Patronus Ark layered security scanners.
+- name: patronus-api-client
+  registry: pypi
+  official: true
+  url: https://pypi.org/project/patronus-api-client/
+  version: 0.1.0
+  published: '2026-09-15'
+  repository: https://github.com/patronus-protect/patronus-security-cli
+  description: >-
+    Synchronous, dependency-free Python client for the Patronus Scan API (scan_text, scan_url,
+    scan_files, scan_mcp_server; submit + job lookup).
+- name: patronus-api-client
+  registry: crates
+  official: true
+  url: https://crates.io/crates/patronus-api-client
+  version: 0.1.0
+  published: '2026-09-15'
+  repository: https://github.com/patronus-protect/patronus-security-cli
+  description: Rust client for the Patronus Scan API.
+- name: "@patronus-protect/api-client"
+  registry: npm
+  official: true
+  url: https://www.npmjs.com/package/@patronus-protect/api-client
+  version: 0.1.0
+  published: '2026-09-15'
+  repository: https://github.com/patronus-protect/patronus-security-cli
+  description: TypeScript client for the Patronus Scan API.
+- name: patronus-security-scanner
+  registry: github-releases
+  official: true
+  url: https://github.com/patronus-protect/patronus-security-cli/releases
+  version: 0.1.0
+  published: '2026-09-15'
+  repository: https://github.com/patronus-protect/patronus-security-cli
+  description: >-
+    Local CLI binary (macOS/Linux/Windows) plus Codex/Claude Code/DeepSeek plugins, distributed as
+    signed release archives (blake3 + sha256), installed via curl script - no package-registry entry.
+  note: >-
+    Distributed only through GitHub Releases; there is no crates.io/npm/PyPI package for the scanner
+    binary, so no registry metadata endpoint applies. Version read from the v0.1.0 release tag.

@@ -15,6 +15,17 @@ tags:
 - Prompt Injection
 - Security
 - LLM
+- Agent-Native
+- MCP
+- DLP
+- PII
+- On-Device
+- AI Firewall
+tags_raw:
+- AI Safety
+- Prompt Injection
+- Security
+- LLM
 - agent-native
 - MCP
 - DLP
@@ -22,28 +33,20 @@ tags:
 - On-Device
 - AI Firewall
 apis:
-- name: Patronus Scan API
-  description: >-
-    Public REST Scan API (OpenAPI 3.1, contract v1.2.0). POST /api/v1/scan submits text, a public
-    HTTPS URL, an MCP server, or uploaded documents for prompt-injection, PII/DLP, sensitive-document
-    and agentic-tool-risk detection; GET /api/v1/scan/{job_id} polls the job. Bearer API key, with a
-    rate-limited anonymous allowance for public-URL scans.
+- aid: patronus-protect:patronus-protect-scan-api
+  name: Patronus Protect Scan API
+  description: The Scan API from Patronus Protect — 2 operation(s) for scan.
   humanURL: https://docs.patronus.studio/api-reference/
   baseURL: https://control.patronus.studio/api/v1
+  tags:
+  - Scan
   properties:
   - type: OpenAPI
-    url: openapi/patronus-protect-openapi.json
-  - type: OpenAPI
-    url: https://docs.patronus.studio/openapi.json
-    name: Provider-hosted OpenAPI (contract v1.2.0)
+    url: openapi/patronus-protect-scan-api-openapi.yml
   - type: Documentation
     url: https://docs.patronus.studio/api-reference/
   - type: APIReference
     url: https://docs.patronus.studio/api-reference/
-  - type: Overlay
-    url: overlays/patronus-protect-openapi-overlay.yaml
-  - type: MCPServer
-    url: mcp/patronus-protect-mcp.yml
   - type: ToolCrosswalk
     url: mcp/patronus-protect-tool-crosswalk.yml
   - type: Authentication
@@ -59,6 +62,10 @@ apis:
   - type: Conventions
     url: conventions/patronus-protect-conventions.yml
 common:
+- type: Overlay
+  url: overlays/patronus-protect-openapi-overlay.yaml
+- type: MCPServer
+  url: mcp/patronus-protect-mcp.yml
 - type: Website
   url: https://patronus.studio/
 - type: DeveloperPortal

@@ -1,29 +1,25 @@
 {
   "provider": "patronus-protect",
   "sources": [
-    "_original/patronus-protect-openapi.json",
-    "patronus-protect-openapi.json"
+    "_original/patronus-protect-openapi.json"
   ],
   "outputs": [
     "patronus-protect-scan-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/patronus-protect-openapi.json"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "patronus-protect-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "patronus-protect-openapi.json: tagged paths POST /api/v1/scan -> Scan",
     "patronus-protect-openapi.json: tagged paths GET /api/v1/scan/{job_id} -> Scan",
     "patronus-protect-openapi.json: declared missing tag: Scan",
-    "patronus-protect-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "patronus-protect-openapi.json: tagged paths POST /api/v1/scan -> Scan",
-    "patronus-protect-openapi.json: tagged paths GET /api/v1/scan/{job_id} -> Scan",
-    "patronus-protect-openapi.json: declared missing tag: Scan",
-    "tag 'Scan' spans 2 source specs (patronus-protect-openapi.json, patronus-protect-openapi.json): per-path servers applied",
-    "apis.yml register: written (+1 apis, 1 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "_original/patronus-protect-openapi_2.json: archived document superseded by a larger archived document",
+    "patronus-protect-scan-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

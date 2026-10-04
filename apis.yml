@@ -39,6 +39,8 @@ apis:
   humanURL: https://docs.patronus.studio/api-reference/
   baseURL: https://control.patronus.studio/api/v1
   tags:
+  - Scans
+  tags_raw:
   - Scan
   properties:
   - type: OpenAPI
@@ -62,6 +64,9 @@ apis:
   - type: Conventions
     url: conventions/patronus-protect-conventions.yml
 common:
+- type: CapabilityMap
+  url: capabilities/patronus-protect-capability-edges.yml
+  name: Patronus Protect Business Capability Map
 - type: Overlay
   url: overlays/patronus-protect-openapi-overlay.yaml
 - type: MCPServer

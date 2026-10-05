@@ -1,0 +1,27 @@
+slug: patronus-protect
+provider: Patronus Protect
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Scan
+  spec_file: patronus-protect-scan-api-openapi.yml
+  capability_id: BC-620
+  capability_id_l1: BC-620
+  capability_name: Cybersecurity Management
+  confidence: 0.8
+  evidence: '"on-device AI firewall that detects prompt injection, PII/DLP, sensitive documents and agentic
+    tool risk"; schemas "SafetyStatus", "TextScan", "UrlScan", "McpServerScan", "DecisionEvidence"'
+  reason: The scan operations submit text, URLs, documents and MCP servers and return safety verdicts
+    for injection and sensitive-data risk — a security screening control. Clearly Cybersecurity Management
+    at L1; the sub-capability is ambiguous between threat detection, vulnerability scanning and privacy/data-protection
+    filtering, so no L2 asserted.

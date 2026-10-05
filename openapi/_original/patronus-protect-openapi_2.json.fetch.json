@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.patronus.studio/openapi.json",
+ "requested_url": "https://docs.patronus.studio/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 45604,
+ "sha256": "18d98ab88b9833cd16c41e068c3a8a51d48ae06b030383b69a70a494caa50b4f",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

@@ -64,6 +64,8 @@ apis:
   - type: Conventions
     url: conventions/patronus-protect-conventions.yml
 common:
+- type: RateLimits
+  url: rate-limits/patronus-protect-rate-limits.yml
 - type: CapabilityMap
   url: capabilities/patronus-protect-capability-edges.yml
   name: Patronus Protect Business Capability Map

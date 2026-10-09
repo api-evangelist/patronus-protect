@@ -115,3 +115,19 @@ tools:
         type: string
         description: Static finding file_id.
     additionalProperties: false
+rfc9728:
+  endpoint: https://control.patronus.studio/api/mcp
+  metadata_url: https://control.patronus.studio/.well-known/oauth-protected-resource/api/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://control.patronus.studio/api/mcp
+    authorization_servers:
+    - https://control.patronus.studio
+    scopes_supported:
+    - scan:read
+    - scan:write
+    bearer_methods_supported:
+    - header

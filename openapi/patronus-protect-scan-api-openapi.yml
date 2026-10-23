@@ -1085,3 +1085,9 @@ components:
       type: http
       scheme: bearer
       description: Account API key from the Control Plane. POST needs scan:write; GET needs scan:read.
+x-provenance:
+  method: harvested
+  publisher: Patronus Protect
+  source: https://docs.patronus.studio/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

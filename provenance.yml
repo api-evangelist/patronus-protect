@@ -6,6 +6,9 @@ artifacts:
   authentication/patronus-protect-authentication.yml:
     method: derived
     evidence: declared in the artifact
+  capabilities/patronus-protect-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/patronus-protect-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -27,10 +30,16 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/patronus-protect-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
   json-schema/patronus-protect-runtime-v1.schema.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-20T232958.yml:
@@ -57,6 +66,21 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   llms/patronus-protect-llms.txt:
     method: generated
     evidence: carries an API Evangelist house phrase
@@ -68,9 +92,13 @@ artifacts:
     evidence: declared in the artifact
   openapi/_original/patronus-protect-openapi.json:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
-  openapi/patronus-protect-openapi.json:
+    evidence: the same operations as https://docs.patronus.studio/openapi.json (sha256 18d98ab88b98, fetched
+      2026-10-04)
+  openapi/_original/patronus-protect-openapi_2.json:
+    method: harvested
+    evidence: the same operations as https://docs.patronus.studio/openapi.json (sha256 18d98ab88b98, fetched
+      2026-10-04)
+  openapi/patronus-protect-scan-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/patronus-protect-openapi-overlay.yaml:

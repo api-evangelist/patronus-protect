@@ -1,4 +1,4 @@
-# patronus-protect
+# Patronus Protect
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,4 +64,127 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-On-device AI firewall from Casdo Labs GmbH that detects prompt injection, PII/DLP, sensitive documents and agentic tool risk in text, public HTTPS URLs, documents and MCP servers before they reach AI agents, RAG pipelines or LLM applications, via a REST Scan API, first-party Rust/TypeScript/Python SDK clients, a local CLI with Codex/Claude Code/DeepSeek plugins, a remote OAuth-protected MCP server and a local stdio MCP server, plus the open-source Patronus Ark scanning core.
+Patronus Protect, from Casdo Labs GmbH, is an on-device AI firewall that detects prompt injection, PII/DLP, sensitive documents and agentic tool risk in text, public HTTPS webpages, documents and MCP servers before they are used by AI agents, RAG pipelines or LLM applications. It exposes a REST Scan API (control.patronus.studio/api/v1), first-party Rust, TypeScript and Python SDK clients, a local CLI with Codex, Claude Code and DeepSeek plugins, a remote OAuth-protected MCP server and a local stdio MCP server, and the open-source Patronus Ark scanning core.
+
+**Areas:** AI Safety · Prompt Injection · Security · LLM · Agent-Native · MCP · DLP · PII · On-Device · AI Firewall
+
+## Patronus Protect on APIs.io
+
+Everything profiled for Patronus Protect is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/patronus-protect/](https://apis.io/providers/patronus-protect/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Patronus Protect Scan API](https://apis.io/apis/patronus-protect/patronus-protect-scan-api/) — The Scan API from Patronus Protect — 2 operation(s) for scan.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [patronus-native](https://apis.io/servers/patronus-protect/patronus-native/)
+
+#### JSON Schema (1)
+
+The data models the API reads and writes.
+
+- [Patronus local runtime v1 NDJSON frame](https://apis.io/schemas/patronus-protect/patronus-protect-runtime-v1.schema/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Patronus Protect Openapi Overlay](https://apis.io/overlays/patronus-protect/patronus-protect-openapi-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Patronus Protect Authentication](https://apis.io/security/patronus-protect/patronus-protect-authentication/)
+- [Patronus Protect Domain Security](https://apis.io/security/patronus-protect/patronus-protect-domain-security/)
+- [Patronus Protect Vulnerability Disclosure](https://apis.io/security/patronus-protect/patronus-protect-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Patronus Protect Scopes](https://apis.io/scopes/patronus-protect/patronus-protect-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Patronus Protect Plans Pricing](https://apis.io/plans/patronus-protect/patronus-protect-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Patronus Protect Rate Limits](https://apis.io/rate-limits/patronus-protect/patronus-protect-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://patronus.studio/)
+- [Getting started](https://patronus-protect.github.io/patronus-security/getting-started/quickstart/)
+- [Pricing](https://patronus.studio/pricing)
+- [Blog](https://patronus.studio/blog)
+- [GitHub](https://github.com/patronus-protect)
+
+## API Evangelist rating
+
+**Kin Score 51.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 52.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 31.6 |
+| Developer ergonomics | 73.8 |
+| Access clarity | 42.1 |
+
+**Agent readiness 66.9** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | verified |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 30.0** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/patronus-protect/](https://apis.io/providers/patronus-protect/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Patronus Protect: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/patronus-protect/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
